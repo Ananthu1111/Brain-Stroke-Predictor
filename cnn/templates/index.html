@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Stroke Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Brain Stroke Detection</h1>
+        <form action="{{ url_for('predict') }}" method="POST" enctype="multipart/form-data">
+            <label for="file">Upload CT Scan Image:</label>
+            <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png" required onchange="previewImage(event)">
+            <button type="submit">Predict</button>
+        </form>
+        <!-- Image preview -->
+        <div id="preview-container">
+            <img id="preview-img" src="#" alt="Image Preview" style="display: none; max-width: 300px; margin-top: 20px;">
+        </div>
+    </div>
+
+    <!-- Info box section -->
+    <div class="info-box">
+        <p><strong>Algorithm Used:</strong> Custom CNN</p>
+        <p><strong>Accuracy:</strong> 93.75%</p>
+    </div>
+
+    <!-- JavaScript for image preview -->
+    <script>
+        function previewImage(event) {
+            const previewContainer = document.getElementById('preview-container');
+            const previewImg = document.getElementById('preview-img');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    previewImg.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>
